@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>チームメンバー一覧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-8 bg-orange-100">
+    <h1 class="text-2xl font-bold mb-6">チームメンバー</h1>
+        <ul id="feature" class="mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
+      <li>
+        <button
+              type="button"
+              data-category="all member"
+              class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+            >
+              全員
+      </button>
+      </li>
+      <li>
+        <button
+        type="button"
+        data-category="engineer"
+        class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+        >
+      エンジニア</button>
+      </li>
+      <li>
+        <button
+        type="button"
+        data-category="designer"
+        class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+        >
+      デザイナー</button>
+      </li>
+            <li>
+        <button
+        type="button"
+        data-category="PdM"
+        class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+        >
+      PdM</button>
+      </li>
+            <li>
+        <button
+        type="button"
+        data-category="presenter"
+        class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+        >
+      プレゼンター</button>
+      </li>
+            <li>
+        <button
+        type="button"
+        data-category="mood maker"
+        class="rounded-full border border-sub px-5 py-2 text-sm bg-gray-100 m-2 hover:bg-gray-200"
+        >
+      ムードメーカー</button>
+      </li>
+    </ul>
+
+    <div id="memberList" class="grid gap-4"></div>
+
+    <script>const members = [
+  { name: "川名遼太", role: "presenter", comment: "優勝目指して頑張ります" },
+  { name: "小林翔斗", role: "engineer", comment: "バックエンドが得意です" },
+  { name: "佐々木蒼空", role: "PdM", comment: "ユーザー視点を大切に" },
+  { name: "飯野小紅", role: "designer", comment: "UIにこだわってやってます" },
+  { name: "向田陽莉", role: "mood maker", comment: "チームの雰囲気づくりは任せてください" }
+];
+
+const memberList = document.getElementById("memberList");
+const buttons = document.querySelectorAll("#feature button");
+
+// 初期表示（全員）
+renderMembers(members);
+
+// ボタンにイベントをつける
+buttons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const category = btn.dataset.category;
+
+    // 絞り込み処理
+    const filtered =
+      category === "all member"
+        ? members
+        : members.filter((m) => m.role === category);
+
+    renderMembers(filtered);
+  });
+});
+
+// カード描画関数
+function renderMembers(list) {
+  memberList.innerHTML = ""; // 一旦リセット
+
+  list.forEach((member) => {
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-lg shadow p-4";
+
+    card.innerHTML = `
+      <h2 class="text-lg font-bold">${member.name}</h2>
+      <p class="text-blue-600 text-sm">${member.role}</p>
+      <p class="text-gray-600 mt-2">${member.comment}</p>
+    `;
+
+    memberList.appendChild(card);
+  });
+}
+</script>
